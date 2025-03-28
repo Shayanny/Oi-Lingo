@@ -1,0 +1,7 @@
+{
+  "name": "oi-lingo",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

@@ -1,0 +1,73 @@
+ion-content {
+  text-align: center;
+  --background: transparent !important; /* Remove any default background */
+  background-color: #e7ceaf !important;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .logo img {
+    width: 300px;
+    margin-bottom: 0px;
+    margin-top: 20px;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+
+  .welcome {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px 0;
+
+    span {
+      color: brown;
+      font-weight: bold;
+    }
+  }
+
+  .menu-buttons {
+    display: flex;
+    flex-direction: column;
+    /* Stacks buttons vertically */
+    align-items: center;
+    /* Centers buttons horizontally */
+    gap: 15px;
+    /* Adds space between buttons */
+    width: 80%;
+    /* Adjusts width to fit screen */
+    margin: 0 auto;
+    /* Centers the menu */
+  }
+
+  ion-button {
+    width: 100%;
+    max-width: 300px;
+    font-size: 20px;
+    letter-spacing: 4px;
+    /* Spreads out letters */
+    transform: scaleY(0.9);
+    /* Slightly squishes text vertically */
+  }
+
+  .green {
+    background-color: #6fcf97;
+  }
+
+  .yellow {
+    background-color: #f2c94c;
+  }
+
+  .orange {
+    background-color: #f2994a;
+  }
+
+  .red {
+    background-color: #eb5757;
+  }
+}

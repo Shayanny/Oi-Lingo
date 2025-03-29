@@ -12,11 +12,12 @@ ion-content {
   .logo img {
     width: 300px;
     margin-bottom: 0px;
-    margin-top: 20px;
+    margin-top: 0px;
   }
 
   h1 {
-    font-size: 28px;
+    margin-top: 10px;
+    font-size: 35px;
     font-weight: bold;
     letter-spacing: 2px;
   }
@@ -38,8 +39,9 @@ ion-content {
 
   ion-button {
     width: 100%;
-    max-width: 230px;
-    font-size: 20px;
+    height: 50px;
+    width: 230px;
+    font-size: 24px;
     letter-spacing: 4px;
     /* Spreads out letters */
     transform: scaleY(0.9);
@@ -66,8 +68,9 @@ ion-content {
   .welcome {
 
     font-size: 30px;
+    transform: scaleX(0.9);
     font-weight: bold;
-    margin: 20px 0;
+    margin-bottom: 10px ;
     color: black;
     
     //text-shadow: 2px 2px 4px rgba(232, 39, 39, 0.5),

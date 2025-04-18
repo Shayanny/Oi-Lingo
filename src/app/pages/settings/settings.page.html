@@ -1,13 +1,15 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>settings</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content fullscreen>
+  <div class="background">
+    <div class="settings-container">
+      <ion-buttons slot="start" class="back-button">
+        <ion-back-button defaultHref="/home" text="" style="color: black;"></ion-back-button>
+      </ion-buttons>
+      <img src="assets/img/tsn.PNG" class="logo" alt="Oi Lingo logo" />
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">settings</ion-title>
-    </ion-toolbar>
-  </ion-header>
+      <ion-button class="green">Notifications : On</ion-button>
+      <ion-button class="yellow">Change Email</ion-button>
+      <ion-button class="orange">Change Password</ion-button>
+      <ion-button class="red">Delete Account</ion-button>
+    </div>
+  </div>
 </ion-content>

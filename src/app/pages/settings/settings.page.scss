@@ -1,0 +1,82 @@
+ion-content {
+    --background: transparent;
+  
+    .background {
+      background: url('/assets/img/tropicalbackground.png') no-repeat center center / cover;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: 0;
+    }
+  
+    .settings-container {
+      position: relative;
+      z-index: 1;
+      margin: 40px auto;
+      padding: 40px 20px;
+      max-width: 340px;
+      background: rgba(231, 203, 203, 0.3); // translucent
+      border-radius: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      backdrop-filter: blur(8px); // frosted glass effect
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+      height: 90vh; // 90% of screen height
+
+      
+    }
+  
+    .logo {
+      height: 200px;
+      width: 240px;
+      margin-bottom: 50px;
+      margin-top: 10px;
+    }
+  
+    ion-button {
+      width: 100%;
+      height: 50px;
+      font-size: 18px;
+      margin: 10px 0;
+      font-weight: bold;
+      letter-spacing: 1px;
+      --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 90%;
+      margin: 20px 0;
+   
+    }
+  
+    ion-button.green {
+        --background: #70f3a2;
+        --color: black;
+      }
+      
+      ion-button.yellow {
+        --background: #feeb58;
+        --color: black;
+      }
+      
+      ion-button.orange {
+        --background: #f9b22d;
+        --color: black;
+      }
+      
+      ion-button.red {
+        --background: #f65d49;
+        --color: white;
+      }
+
+      .back-button {
+        position: absolute;
+        top: 20px;
+        left: 16px;
+        z-index: 10;
+      }
+      
+  }
+  

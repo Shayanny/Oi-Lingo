@@ -12,6 +12,8 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage {
+  username: string = 'uSeR';
+
   constructor(private router: Router) {}
 
   navigateTo(page: string) {

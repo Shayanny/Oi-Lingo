@@ -1,7 +1,10 @@
 ion-content {
+
+    font-family: 'Quicksand', sans-serif;
+
     --background: transparent;
   
-    .background {
+    .lesson-background {
       background: url('/assets/img/tropicalbackground.png') no-repeat center center / cover;
       width: 100%;
       height: 100%;
@@ -28,7 +31,6 @@ ion-content {
     }
   
   
-  
     ion-button {
       width: 100%;
       height: 50px;
@@ -48,10 +50,50 @@ ion-content {
   
       .back-button {
         position: absolute;
-        top: 20px;
-        left: 16px;
+        top: 15px;
+        left: 10px;
         z-index: 10;
       }
       
+      .title-box {
+        background-color: #6fcf97;
+        color: black;
+        padding: 20px 30px;
+        margin-top: 10px;
+        font-size: 23px;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 15px;
+        margin-bottom: 30px;
+      }
+    
+      .main-word {
+        font-size: 50px;
+        text-align: center;
+        font-weight: bold;
+        margin: 10px 20 20px 0;
+        margin-bottom: 20px;
+      }
+    
+      .summary {
+        font-size: 28px;
+        text-align: center;
+        margin-bottom: 25px;
+        color: #000000;
+      }
+    
+      .example {
+        font-style: italic;
+        font-size: 25px;
+        text-align: center;
+        margin-bottom: 25px;
+        color: #000000;
+      }
+    
+      .translation {
+        font-size: 23px;
+        text-align: center;
+        color: #000000;
+      }
   }
   

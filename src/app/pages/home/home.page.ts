@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonicModule} from '@ionic/angular';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-home',
   standalone: true, // Enables Standalone mode
-  imports: [IonicModule],
+  imports: [IonicModule, RouterModule],
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })

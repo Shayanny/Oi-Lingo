@@ -1,0 +1,58 @@
+<ion-content fullscreen>
+  <div class="signup-background">
+    <div class="signup-container">
+      <div class="logo">
+        <h1>OI LINGO</h1>
+        <img src="assets/img/logo.png" alt="Oi Lingo Logo" />
+      </div>
+
+      <form (submit)="signup()">
+        <ion-item class="form-item" [class.invalid]="!emailValid">
+          <ion-input 
+            type="email" 
+            [(ngModel)]="email" 
+            name="email" 
+            placeholder="Email"
+            (ionInput)="validateEmail()"
+            required>
+          </ion-input>
+        </ion-item>
+
+        <ion-item class="form-item" [class.invalid]="!passwordValid">
+          <ion-input 
+            type="password" 
+            [(ngModel)]="password" 
+            name="password" 
+            placeholder="Password (min 6 characters)"
+            (ionInput)="validatePassword()"
+            required>
+          </ion-input>
+        </ion-item>
+
+        <ion-item class="form-item">
+          <ion-input 
+            type="password" 
+            [(ngModel)]="confirmPassword" 
+            name="confirmPassword" 
+            placeholder="Confirm Password"
+            required>
+          </ion-input>
+        </ion-item>
+
+        <ion-button expand="block" type="submit" class="signup-button">
+          Create Account
+        </ion-button>
+      </form>
+
+      <div class="separator">
+        <span class="separator-line"></span>
+        <span class="separator-text">or</span>
+        <span class="separator-line"></span>
+      </div>
+
+      <ion-button expand="block" fill="clear" (click)="goToLogin()" class="login-button">
+        Already have an account? Login
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

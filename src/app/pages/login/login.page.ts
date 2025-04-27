@@ -105,4 +105,8 @@ export class LoginPage {
     await alert.present();
   }
 
+  goToSignup() {
+    this.router.navigate(['/signup']);
+  }
+
 }

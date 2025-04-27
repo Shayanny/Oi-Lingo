@@ -6,45 +6,48 @@
         <img src="assets/img/logo.png" alt="Oi Lingo Logo" />
       </div>
 
-      <h2 class="login-title">Create an account</h2>
-      
-      <form (submit)="login()">
-        <ion-item>
+      <form (submit)="login()" class="auth-form">
+        <ion-item class="form-item">
           <ion-input 
             type="email" 
             [(ngModel)]="email" 
             name="email" 
-            placeholder="email@domain.com"
-            autocapitalize="off"
-            autocorrect="off"
-            inputmode="email"
-            clearInput
+            placeholder="Email" 
             required>
           </ion-input>
         </ion-item>
 
-        <ion-item>
+        <ion-item class="form-item">
           <ion-input 
             type="password" 
             [(ngModel)]="password" 
             name="password" 
-            placeholder="Password"
-            autocapitalize="off"
-            autocorrect="off"
-            clearInput
+            placeholder="Password" 
             required>
           </ion-input>
         </ion-item>
 
-        <ion-button expand="full" type="submit">Continue</ion-button>
+        <ion-button expand="block" type="submit" class="login-button">
+          Login
+        </ion-button>
       </form>
 
+      <div class="separator">
+        <span class="separator-line"></span>
+        <span class="separator-text">or</span>
+        <span class="separator-line"></span>
+      </div>
+
+      <ion-button expand="block" fill="clear" (click)="goToSignup()" class="signup-button">
+        Create New Account
+      </ion-button>
+
       <div class="social-login">
-        <ion-button expand="full" (click)="signInWithGoogle()">
+        <ion-button expand="block" (click)="signInWithGoogle()" class="social-button google">
           <ion-icon name="logo-google" slot="start"></ion-icon>
           Sign In with Google
         </ion-button>
-        <ion-button expand="full" (click)="signInWithApple()">
+        <ion-button expand="block" (click)="signInWithApple()" class="social-button apple">
           <ion-icon name="logo-apple" slot="start"></ion-icon>
           Sign In with Apple
         </ion-button>

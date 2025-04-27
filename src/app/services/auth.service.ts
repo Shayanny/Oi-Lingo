@@ -4,15 +4,20 @@ import {
   signInWithEmailAndPassword,
   signOut,
   User,
+  UserCredential,
   GoogleAuthProvider,
   signInWithPopup,
   signInWithRedirect,
-  OAuthProvider
+  OAuthProvider,
+  getRedirectResult,
+  createUserWithEmailAndPassword
 } from '@angular/fire/auth';
 import { onAuthStateChanged } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { Capacitor } from '@capacitor/core';
+import { browserSessionPersistence, setPersistence } from '@angular/fire/auth';
 
 
 @Injectable({
@@ -28,15 +33,32 @@ export class AuthService {
   ) {
     onAuthStateChanged(this.auth, (user) => {
       this.currentUser$.next(user);
+      if (user) this.router.navigate(['/home']);
     });
+
+    if (Capacitor.isNativePlatform()) {
+      this.handleRedirectResult();
+    }
   }
 
-  login(email: string, password: string) {
+  private async handleRedirectResult() {
+    try {
+      const result = await getRedirectResult(this.auth);
+      if (result?.user) {
+        this.router.navigate(['/home']);
+      }
+    } catch (error) {
+      console.error('Redirect error:', error);
+    }
+  }
+
+  async login(email: string, password: string) {
+    await setPersistence(this.auth, browserSessionPersistence);
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
   // Google Sign-In
-  async googleSignIn() {
+  async googleSignIn(): Promise<UserCredential | void> {
     try {
       const provider = new GoogleAuthProvider();
       
@@ -55,12 +77,19 @@ export class AuthService {
   }
 
   // Apple Sign-In
-  async appleSignIn() {
+  async appleSignIn(): Promise<UserCredential | void> {
     try {
       const provider = new OAuthProvider('apple.com');
       provider.addScope('email');
       provider.addScope('name');
       
+      // iOS-specific optimization
+    if (this.platform.is('ios')) {
+      provider.setCustomParameters({
+        prompt: 'select_account' // Forces account selection
+      });
+    }
+
       if (this.platform.is('mobile')) {
         await signInWithRedirect(this.auth, provider);
       } else {
@@ -74,6 +103,14 @@ export class AuthService {
     }
   }
 
+  async signup(email: string, password: string, name: string) {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+      return userCredential;
+    } catch (error) {
+      throw error;
+    }
+  }
   logout() {
     return signOut(this.auth);
   }

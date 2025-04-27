@@ -1,26 +1,30 @@
 <ion-content fullscreen>
   <div class="lesson-background">
     <div class="lesson-container">
-    <ion-buttons slot="start" class="back-button">
-      <ion-back-button defaultHref="/home" text="" style="color: black;"></ion-back-button>
-    </ion-buttons>
-     <!-- Title box -->
-     <div class="title-box">Palavra Of The Day</div>
+      <ion-buttons slot="start" class="back-button">
+        <ion-back-button defaultHref="/home" text="" style="color: black;"></ion-back-button>
+      </ion-buttons>
 
-     <!-- Word of the day -->
-     <h1 class="main-word">Café</h1>
+      <!-- Title box -->
+      <div class="title-box">Palavra Of The Day</div>
 
-     <!-- Summary text -->
-     <p class="summary">
-       Today’s word of the day means coffee, a very common word in Portuguese.
-       Brazil is the world’s largest coffee producer.
-     </p>
+      <!-- Word of the day -->
+      <h1 class="main-word">{{ palavra?.word }}</h1>
 
-     <!-- Example in Portuguese -->
-     <blockquote class="example">"Vamos tomar um cafezinho hoje?"</blockquote>
+      <!-- Summary text -->
+      <p class="summary">
+        {{ palavra?.summary }}
+      </p>
 
-     <!-- Translation -->
-     <p class="translation">“Let’s take a little coffee break today?”</p>
+      <!-- Example in Portuguese -->
+      <blockquote class="example">
+        "{{ palavra?.example }}"
+      </blockquote>
+
+      <!-- Translation -->
+      <p class="translation">
+        “{{ palavra?.translation }}”
+      </p>
     </div>
   </div>
 </ion-content>

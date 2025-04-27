@@ -10,21 +10,44 @@
       
       <form (submit)="login()">
         <ion-item>
-          <ion-label position="floating">Email</ion-label>
-          <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
+          <ion-input 
+            type="email" 
+            [(ngModel)]="email" 
+            name="email" 
+            placeholder="email@domain.com"
+            autocapitalize="off"
+            autocorrect="off"
+            inputmode="email"
+            clearInput
+            required>
+          </ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Password</ion-label>
-          <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
+          <ion-input 
+            type="password" 
+            [(ngModel)]="password" 
+            name="password" 
+            placeholder="Password"
+            autocapitalize="off"
+            autocorrect="off"
+            clearInput
+            required>
+          </ion-input>
         </ion-item>
 
         <ion-button expand="full" type="submit">Continue</ion-button>
       </form>
 
       <div class="social-login">
-        <ion-button expand="full">Sign In with Google</ion-button>
-        <ion-button expand="full">Sign In with Apple</ion-button>
+        <ion-button expand="full" (click)="signInWithGoogle()">
+          <ion-icon name="logo-google" slot="start"></ion-icon>
+          Sign In with Google
+        </ion-button>
+        <ion-button expand="full" (click)="signInWithApple()">
+          <ion-icon name="logo-apple" slot="start"></ion-icon>
+          Sign In with Apple
+        </ion-button>
       </div>
     </div>
   </div>

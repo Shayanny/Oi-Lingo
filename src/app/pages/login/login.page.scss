@@ -14,15 +14,16 @@ ion-content {
       position: relative;
       z-index: 1;
       margin: 40px auto;
-      padding: 10px 10px;
+      padding: 20px;
       max-width: 350px;
-      background: rgba(231, 206, 175);
+      background: rgba(231, 206, 175, 0.9);
       border-radius: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
-      height: 90vh;
+      height: auto;
+      min-height: 70vh;
     }
   
     .logo img {
@@ -36,6 +37,7 @@ ion-content {
       font-weight: bold;
       letter-spacing: 2px;
       text-align: center;
+      color: #2c3e50;
     }
   
     h2 {
@@ -43,6 +45,7 @@ ion-content {
       font-size: 20px;
       font-weight: normal;
       text-align: center;
+      color: #2c3e50;
     }
   
     form {
@@ -53,21 +56,36 @@ ion-content {
       margin: 20px 0;
     }
   
+    ion-item {
+      --background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      margin-bottom: 15px;
+      --highlight-color-focused: var(--ion-color-primary);
+    }
+  
+    ion-input {
+      --padding-start: 10px;
+      --padding-end: 10px;
+      color: #2c3e50;
+    }
+  
     .social-login {
       width: 100%;
       display: flex;
       flex-direction: column;
       gap: 10px;
       align-items: center;
+      margin-top: 20px;
     }
   
     ion-button {
       width: 100%;
       height: 50px;
-      font-size: 18px;
-      letter-spacing: 2px;
+      font-size: 16px;
+      letter-spacing: 1px;
       --box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
       margin-bottom: 10px;
+      --border-radius: 10px;
     }
   
     .login-title {
@@ -75,15 +93,21 @@ ion-content {
       text-align: center;
       font-weight: bold;
       margin-bottom: 20px;
+      color: #2c3e50;
     }
   
-    .social-login ion-button {
-      background-color: #3b5998; /* Facebook */
+    .social-login ion-button:first-child {
+      --background: #db4437; /* Google */
       --color: white;
     }
   
     .social-login ion-button:last-child {
-      background-color: #db4437; /* Google */
+      --background: #000000; /* Apple */
+      --color: white;
+    }
+  
+    ion-icon {
+      font-size: 24px;
+      margin-right: 10px;
     }
   }
-  

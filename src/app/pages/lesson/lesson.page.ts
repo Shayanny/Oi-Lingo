@@ -15,16 +15,15 @@ export class LessonPage implements OnInit {
 
   palavra: any;
 
-  constructor(private wordService: WordService) {}
+  constructor(private wordService: WordService) { }
 
   ngOnInit() {
     const today = new Date().toISOString().split('T')[0]; // Format: '2025-04-27'
     const savedData = localStorage.getItem('palavraOfTheDay');
-    
+
     if (savedData) {
       const saved = JSON.parse(savedData);
       if (saved.date === today) {
-        // ✅ Use saved word if it's for today
         this.palavra = saved.word;
         return;
       }
@@ -32,10 +31,18 @@ export class LessonPage implements OnInit {
 
     // 🚀 Otherwise, fetch new random word
     this.wordService.getWords().subscribe(words => {
-      const randomIndex = Math.floor(Math.random() * words.length);
-      this.palavra = words[randomIndex];
+      const yesterdayData = JSON.parse(localStorage.getItem('palavraOfTheDay') || '{}');
+      let newWord;
+      let attempts = 0;
 
-      // Save it to localStorage
+      do {
+        const randomIndex = Math.floor(Math.random() * words.length);
+        newWord = words[randomIndex];
+        attempts++;
+      } while (yesterdayData.word?.word === newWord.word && attempts < 10);
+
+      this.palavra = newWord;
+
       localStorage.setItem('palavraOfTheDay', JSON.stringify({
         date: today,
         word: this.palavra

@@ -6,7 +6,9 @@
       </ion-buttons>
       <img src="assets/img/tsn.PNG" class="logo" alt="Oi Lingo logo" />
 
-      <ion-button class="green">Notifications : On</ion-button>
+      <ion-button class="green" (click)="toggleNotifications()">
+        Notifications : {{ notificationsEnabled ? 'On' : 'Off' }}
+      </ion-button>
       <ion-button class="yellow">Change Email</ion-button>
       <ion-button class="orange">Change Password</ion-button>
       <ion-button class="red">Delete Account</ion-button>

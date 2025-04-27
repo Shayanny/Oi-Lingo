@@ -1,0 +1,112 @@
+ion-content {
+
+    --background: transparent;
+    position: relative;
+  
+    .home-background {
+      background: url('/assets/img/tropicalbackground.png') no-repeat center center / cover;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+  
+    .home-container {
+      position: relative;
+      z-index: 1;
+      margin: 40px auto;
+      padding: 10px 10px;
+      max-width: 350px;
+      background: rgba(231, 206, 175);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+      height: 90vh;
+    }
+    
+  
+    .logo img {
+      width: 300px;
+      margin-bottom: 0px;
+      margin-top: 0px;
+    }
+  
+    h1 {
+      margin-top: 0px;
+      font-size: 35px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+  
+    h2 {
+      margin-top: 0px;
+      font-size: 30px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+  
+  
+    .menu-buttons {
+      display: flex;
+      flex-direction: column;
+      /* Stacks buttons vertically */
+      align-items: center;
+      /* Centers buttons horizontally */
+      gap: 10px;
+      /* Adds space between buttons */
+      width: 80%;
+      /* Adjusts width to fit screen */
+      margin: 0 auto;
+      /* Centers the menu */
+    }
+  
+    ion-button {
+      width: 100%;
+      height: 50px;
+      width: 230px;
+      font-size: 24px;
+      letter-spacing: 4px;
+      /* Spreads out letters */
+      transform: scaleY(0.9);
+      /* Slightly squishes text vertically */
+      --box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    }
+  
+    .green {
+      background-color: #6fcf97;
+    }
+  
+    .yellow {
+      background-color: #f2c94c;
+    }
+  
+    .orange {
+      background-color: #f2994a;
+    }
+  
+    .red {
+      background-color: #eb5757;
+    }
+  
+    .welcome {
+  
+      font-size: 30px;
+      transform: scaleX(0.9);
+      font-weight: bold;
+      margin-bottom: 10px ;
+      color: black;
+      
+      //text-shadow: 2px 2px 4px rgba(232, 39, 39, 0.5),
+      //-2px -2px 4px rgba(16, 213, 52, 0.5);
+      text-shadow: 
+      1px 1px 1px rgb(239, 69, 69),      /* Closest shadow */
+      2px 2px 1px rgb(234, 171, 53),   /* Mid-layer */
+      3px 3px 1px rgb(246, 246, 60),    /* Deeper shadow */
+      4px 4px 1px rgb(98, 245, 54);     /* Farthest shadow */
+     
+    }
+  }

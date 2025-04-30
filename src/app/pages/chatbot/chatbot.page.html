@@ -1,29 +1,137 @@
-<ion-content #content fullscreen>
+<ion-content #content fullscreen [scrollEvents]="true" (ionScroll)="onContentScroll($event)">
+  <!-- Chat background and container -->
   <div class="chat-background">
-    <!-- Back button -->
+    <!-- Back button in a circular container -->
     <div class="back-button" (click)="goBack()">
       <ion-icon name="arrow-back"></ion-icon>
+    </div>
+    
+    <!-- Level indicator and message count -->
+    <div class="chat-header">
+      <div class="level-selector">
+        <ion-select 
+          [(ngModel)]="learningLevel" 
+          (ionChange)="levelChanged()" 
+          interface="popover"
+          [title]="'Select level'"
+          class="level-select">
+          <ion-select-option value="beginner">BEGINNER</ion-select-option>
+          <ion-select-option value="intermediate">INTERMEDIATE</ion-select-option>
+          <ion-select-option value="advanced">ADVANCED</ion-select-option>
+        </ion-select>
+      </div>
+      
+      <div class="conversation-menu" (click)="toggleConversationList()">
+        <ion-icon name="document-text-outline"></ion-icon>
+        <span>{{ currentConversation && currentConversation.messages ? currentConversation.messages.length : 0 }}</span>
+      </div>
     </div>
     
     <!-- Parrot logo -->
     <div class="parrot-logo">
       <img src="assets/img/tsn.PNG" alt="Paco the Parrot" />
+      <h3 class="chat-title" *ngIf="currentConversation">
+        <ion-badge [color]="getBadgeColor(currentConversation.learningLevel)">
+          {{ currentConversation.learningLevel }}
+        </ion-badge>
+        Portuguese Tutor
+      </h3>
     </div>
     
-    <!-- Chat messages -->
+    <!-- Conversation list sidebar (shown/hidden with animation) -->
+    <div class="conversation-list" [class.show-list]="showConversationList">
+      <div class="list-header">
+        <h3>Your Conversations</h3>
+        <ion-button fill="clear" (click)="toggleConversationList()">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-button>
+      </div>
+      
+      <ion-list class="conversations">
+        <ion-item 
+          *ngFor="let conv of conversations" 
+          (click)="switchConversation(conv.id)"
+          [class.active]="currentConversation && currentConversation.id === conv.id">
+          <ion-label>
+            <h2>
+              <ion-badge [color]="getBadgeColor(conv.learningLevel)" class="level-badge">
+                {{ conv.learningLevel }}
+              </ion-badge>
+              {{ conv.title }}
+            </h2>
+            <p>{{ getFormattedDate(conv.lastUpdated) }} · {{ conv.messages.length }} messages</p>
+          </ion-label>
+          
+          <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="deleteConversation(conv.id, $event)">
+              <ion-icon name="trash-outline" color="danger"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-list>
+      
+      <div class="list-footer">
+        <ion-button expand="block" (click)="createNewConversation()">
+          <ion-icon name="add-outline" slot="start"></ion-icon>
+          New Conversation
+        </ion-button>
+      </div>
+    </div>
+    
+    <!-- Topics list sidebar (shown/hidden with animation) -->
+    <div class="topics-list" [class.show-list]="showTopicsList">
+      <div class="list-header">
+        <h3>Lesson Topics</h3>
+        <ion-button fill="clear" (click)="toggleTopicsList()">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-button>
+      </div>
+      
+      <ion-list class="topics">
+        <ion-item *ngFor="let topic of filteredTopics" (click)="startTopicLesson(topic.id)">
+          <ion-label>
+            <h2>{{ topic.name }}</h2>
+            <p>{{ topic.description }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      
+      <div class="list-footer">
+        <ion-button (click)="getWordOfTheDayLesson()" expand="block" fill="solid" color="success">
+          <ion-icon name="flash" slot="start"></ion-icon>
+          Word of the Day
+        </ion-button>
+      </div>
+    </div>
+    
+    <!-- Chat messages container with improved scroll handling -->
     <div class="chat-container" #chatContainer>
-      <div *ngFor="let message of messages" 
-           [ngClass]="{'message': true, 'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}">
-        <div class="message-avatar" *ngIf="message.sender === 'bot'">
-          <img src="assets/img/tsn.PNG" alt="Paco" />
-        </div>
-        <div class="message-bubble">
-          <p class="message-text">{{ message.content }}</p>
-          <span class="message-time">{{ message.timestamp | date:'shortTime' }}</span>
+      <div *ngIf="currentConversation && currentConversation.messages">
+        <!-- Messages with added animation for better visibility -->
+        <div *ngFor="let message of currentConversation.messages" 
+             [ngClass]="getMessageTypeClass(message)"
+             [@messageAnimation]="'in'">
+          <!-- Avatar remains the same -->
+          <div class="message-avatar" *ngIf="message.sender === 'bot'">
+            <img src="assets/img/tsn.PNG" alt="Paco" />
+            <ion-icon *ngIf="message.type && message.type !== 'regular'" 
+                      [name]="getMessageIcon(message)" 
+                      class="message-type-icon"></ion-icon>
+          </div>
+          
+          <!-- Message bubble -->
+          <div class="message-bubble">
+            <p class="message-text">{{ message.content }}</p>
+          </div>
+          
+          <!-- Timestamp -->
+          <div class="message-time">
+            {{ message.timestamp | date:'h:mm a' }}
+          </div>
         </div>
       </div>
       
-      <!-- Typing indicator -->
+      <!-- Loading indicator -->
       <div *ngIf="isLoading" class="message bot-message">
         <div class="message-avatar">
           <img src="assets/img/tsn.PNG" alt="Paco" />
@@ -34,24 +142,138 @@
           <span></span>
         </div>
       </div>
+      
+      <!-- Add a spacer at the bottom for better scrolling -->
+      <div class="message-spacer"></div>
     </div>
   </div>
+  
+  <!-- FAB for additional options - positioned higher to avoid overlapping -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="!showConversationList && !showTopicsList" style="bottom: 100px; right: 15px;">
+    <ion-fab-button size="small">
+      <ion-icon name="ellipsis-vertical"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button size="small" (click)="clearCurrentConversation()">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button size="small" (click)="toggleTopicsList()">
+        <ion-icon name="book"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button size="small" (click)="toggleConversationList()">
+        <ion-icon name="document-text-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>
 
 <!-- Message input area -->
-<div class="message-input-container">
+<div class="message-input-container" *ngIf="!showConversationList && !showTopicsList">
   <div class="message-input-wrapper">
     <ion-input 
       [(ngModel)]="userMessage" 
-      placeholder="TYPE YOUR MESSAGE..." 
+      placeholder="Type your message..." 
       (keyup.enter)="sendMessage()"
       class="message-input">
     </ion-input>
     <div class="input-actions">
-      <ion-icon name="happy-outline" class="input-action-icon"></ion-icon>
       <ion-button (click)="sendMessage()" [disabled]="!userMessage.trim() || isLoading" class="send-button">
         <ion-icon name="send"></ion-icon>
       </ion-button>
     </div>
   </div>
 </div>
+
+<style>
+  /* Additional styles to ensure proper scrolling and spacing */
+  .message-spacer {
+    height: 100px;
+    width: 100%;
+  }
+
+  .conversation-start {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    opacity: 0.6;
+  }
+  
+  .start-line {
+    flex: 1;
+    height: 1px;
+    background-color: #ccc;
+  }
+  
+  .start-text {
+    padding: 0 10px;
+    font-size: 12px;
+    color: #666;
+  }
+  
+  /* Force visible scrollbar for better UX */
+  ion-content::part(scroll) {
+    padding-bottom: 70px !important;
+  }
+  
+  /* Improved FAB positioning */
+  ion-fab {
+    z-index: 99;
+  }
+  
+  ion-fab-button {
+    --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  ion-fab-list {
+    margin-bottom: 10px;
+  }
+  
+  ion-fab-list ion-fab-button {
+    margin: 5px 0;
+  }
+  
+  /* Improve input container styling */
+  .message-input-container {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    padding: 0;
+    background: transparent;
+    z-index: 100;
+  }
+
+  .message-input-wrapper {
+    margin: 0 20px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 50px;
+    padding: 8px 8px 8px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .message-input {
+    --padding-start: 0;
+    --padding-end: 0;
+    --placeholder-color: #999;
+    --placeholder-opacity: 1;
+    --placeholder-font-weight: 400;
+  }
+
+  .send-button {
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    width: 45px;
+    height: 45px;
+    --border-radius: 50%;
+    --background: #1a73e8;
+    margin: 0;
+  }
+
+  .chat-container {
+    padding-bottom: 100px !important;
+  }
+</style>

@@ -8,18 +8,13 @@ import { logoGoogle, logoApple } from 'ionicons/icons';
 import { 
   IonContent, 
   IonButton, 
-  IonItem, 
-  IonLabel, 
+  IonItem,  
   AlertController, 
   IonIcon, 
   IonInput,
   IonText,
   IonRouterLink,
-  IonBackButton,
   IonButtons,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
   IonFooter,
   IonApp
 } from '@ionic/angular/standalone';
@@ -35,16 +30,11 @@ import {
     IonContent,
     IonButton,
     IonItem,
-    IonLabel,
     IonIcon,
     IonInput,
     IonText,
     IonRouterLink,
-    IonBackButton,
     IonButtons,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
     IonFooter,
     IonApp
   ]

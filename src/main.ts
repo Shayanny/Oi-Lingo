@@ -14,6 +14,13 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { environment } from './environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 
+// Storage module for local persistence
+import { IonicStorageModule } from '@ionic/storage-angular';
+
+// Services that need to be provided at the root level
+import { OpenRouterService } from './app/services/openrouter.service';
+import { PortugueseTutorService } from './app/services/portuguese-tutor.service';
+
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -28,5 +35,10 @@ bootstrapApplication(AppComponent, {
     provideAuth(() => getAuth()),
 
     importProvidersFrom(FormsModule),
+    importProvidersFrom(IonicStorageModule.forRoot()),
+    
+    // Provide services
+    OpenRouterService,
+    PortugueseTutorService
   ],
 }).catch(err => console.error(err));

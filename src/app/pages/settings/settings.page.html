@@ -27,9 +27,7 @@
         </ion-button>
       </div>
 
-      <ion-button *ngIf="!showUsernameForm" class="orange">Change Password</ion-button>
-      <ion-button  *ngIf="!showUsernameForm"class="red">Delete Account</ion-button>
-      <ion-button  *ngIf="!showUsernameForm"expand="block" (click)="sendTestNotification()">
+      <ion-button  *ngIf="!showUsernameForm"  (click)="sendTestNotification()">
         Send Test Notification
       </ion-button>
       

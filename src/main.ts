@@ -5,6 +5,8 @@ import { importProvidersFrom } from '@angular/core';
 import { FormsModule } from '@angular/forms';  
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
+import { provideHttpClient } from '@angular/common/http';
+
 
 // Firebase imports
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
@@ -16,6 +18,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    provideHttpClient(),
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
 
@@ -26,4 +29,4 @@ bootstrapApplication(AppComponent, {
 
     importProvidersFrom(FormsModule),
   ],
-});
+}).catch(err => console.error(err));

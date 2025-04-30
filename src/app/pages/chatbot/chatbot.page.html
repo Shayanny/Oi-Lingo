@@ -1,22 +1,47 @@
-<ion-content fullscreen>
-  <div class="background">
-    <div class="chat-container">
-      <ion-buttons slot="start" class="back-button">
-        <ion-back-button defaultHref="/home" text="" style="color: black;"></ion-back-button>
-      </ion-buttons>
 
-      <img src="assets/img/tsn.PNG" class="logo" alt="Oi Lingo logo" />
-
-      <div class="messages" *ngFor="let msg of messages">
-        <div [ngClass]="msg.sender === 'user' ? 'message user' : 'message bot'">
-          {{ msg.text }}
+<ion-content>
+  <div class="chat-container" #chatContainer>
+    <div class="chat-messages">
+      <div *ngFor="let message of messages" 
+           [ngClass]="{'message': true, 'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}">
+        <div class="message-content">
+          <div *ngIf="message.sender === 'bot'" class="bot-avatar">
+            <img src="assets/img/tsn.PNG" alt="Paco" />
+          </div>
+          <div class="message-bubble">
+            <div class="message-text">{{ message.content }}</div>
+            <div class="message-time">{{ message.timestamp | date:'shortTime' }}</div>
+          </div>
         </div>
       </div>
-
-      <div class="input-area">
-        <ion-input [(ngModel)]="userInput" placeholder="Type your message..."></ion-input>
-        <ion-button (click)="sendMessage()" class="send-button">Send</ion-button>
+      <div *ngIf="isLoading" class="typing-indicator">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
       </div>
     </div>
   </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="input-area">
+      <ion-input 
+        [(ngModel)]="userMessage" 
+        placeholder="Type your message..." 
+        (keyup.enter)="sendMessage()"
+        class="message-input">
+      </ion-input>
+      <ion-button 
+        (click)="sendMessage()" 
+        [disabled]="userMessage.trim() === '' || isLoading"
+        expand="block" 
+        fill="solid" 
+        shape="round"
+        color="primary"
+        class="send-button">
+        <ion-icon name="send"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

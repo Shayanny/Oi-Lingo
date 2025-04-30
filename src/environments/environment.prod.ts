@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  openRouterApiKey :"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",
   firebaseConfig: {
     apiKey: "AIzaSyD3jl_VFlzjpIg24OI6u77u7b97qeA35OE",
     authDomain: "oilingo.firebaseapp.com",

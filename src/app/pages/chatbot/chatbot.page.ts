@@ -22,10 +22,10 @@ interface ChatMessage {
   styleUrls: ['./chatbot.page.scss'],
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    IonContent, 
-    IonButton, 
+    CommonModule,
+    FormsModule,
+    IonContent,
+    IonButton,
     IonIcon,
     IonInput
   ]
@@ -82,15 +82,18 @@ export class ChatbotPage implements OnInit {
   }
 
   private getAIResponse(userMessage: string): Observable<any> {
+    const apiKey = environment.openRouterApiKey.trim();
+    console.log('Using API key (first 10 chars):', apiKey.substring(0, 10) + '...');
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.openRouterApiKey}`,
-      'HTTP-Referer': window.location.origin,
+      'Authorization': `Bearer ${apiKey}`,
+      'HTTP-Referer': 'https://oilingo.app',
       'X-Title': 'OiLingo'
     });
 
     const body = {
-      model: 'gemini-1.5-flash-latest',
+      model: 'openai/gpt-3.5-turbo',
       messages: [
         {
           role: 'system',
@@ -111,7 +114,12 @@ export class ChatbotPage implements OnInit {
 
     return this.http.post(this.openRouterUrl, body, { headers }).pipe(
       catchError(error => {
-        console.error('API Error:', error);
+        console.error('API Error details:', {
+          status: error.status,
+          statusText: error.statusText,
+          message: error.message,
+          errorBody: error.error
+        });
         return throwError(() => new Error('Error calling AI API'));
       })
     );

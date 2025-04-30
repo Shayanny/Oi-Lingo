@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { OpenrouterService } from './openrouter.service';
+import { OpenRouterService } from './openrouter.service';
 
 describe('OpenrouterService', () => {
-  let service: OpenrouterService;
+  let service: OpenRouterService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(OpenrouterService);
+    service = TestBed.inject(OpenRouterService);
   });
 
   it('should be created', () => {

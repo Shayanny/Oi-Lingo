@@ -39,12 +39,11 @@ export interface OpenRouterResponse {
   providedIn: 'root'
 })
 export class OpenRouterService {
-  private apiUrl = 'https://openrouter.ai/google/gemini-flash-1.5-8b';
+  private apiUrl = 'https://openrouter.ai/api/v1/chat/completions';
   private apiKey = environment.openRouterApiKey;
-
   constructor(private http: HttpClient) { }
 
-  getChatCompletion(messages: ChatMessage[], model: string = 'openai/gpt-3.5-turbo', temperature: number = 0.7): Observable<OpenRouterResponse> {
+  getChatCompletion(messages: ChatMessage[], model: string = 'gemini-1.5-flash-latest', temperature: number = 0.7): Observable<OpenRouterResponse> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.apiKey}`,

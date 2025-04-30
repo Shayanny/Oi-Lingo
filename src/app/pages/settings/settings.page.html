@@ -4,14 +4,35 @@
       <ion-buttons slot="start" class="back-button">
         <ion-back-button defaultHref="/home" text="" style="color: black;"></ion-back-button>
       </ion-buttons>
+
       <img src="assets/img/tsn.PNG" class="logo" alt="Oi Lingo logo" />
 
-      <ion-button class="green" (click)="toggleNotifications()">
+      <ion-button *ngIf="!showUsernameForm"class="green" (click)="toggleNotifications()">
         Notifications : {{ notificationsEnabled ? 'On' : 'Off' }}
       </ion-button>
-      <ion-button class="yellow">Change Email</ion-button>
-      <ion-button class="orange">Change Password</ion-button>
-      <ion-button class="red">Delete Account</ion-button>
+
+      <!-- 🔘 Change Username triggers input visibility -->
+      <ion-button class="yellow" (click)="toggleUsernameForm()">
+        {{ showUsernameForm ? 'Cancel' : 'Change Username' }}
+      </ion-button>
+
+      <!-- ✅ Only show form if toggled -->
+      <div *ngIf="showUsernameForm">
+        <ion-item>
+          <ion-label position="stacked">Username</ion-label>
+          <ion-input [(ngModel)]="username" placeholder="Enter new username"></ion-input>
+        </ion-item>
+        <ion-button class="save-button" (click)="saveUsername()">
+          Save Username
+        </ion-button>
+      </div>
+
+      <ion-button *ngIf="!showUsernameForm" class="orange">Change Password</ion-button>
+      <ion-button  *ngIf="!showUsernameForm"class="red">Delete Account</ion-button>
+      <ion-button  *ngIf="!showUsernameForm"expand="block" (click)="sendTestNotification()">
+        Send Test Notification
+      </ion-button>
+      
     </div>
   </div>
 </ion-content>

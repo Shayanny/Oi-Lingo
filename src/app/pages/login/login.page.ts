@@ -1,18 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { logoGoogle, logoApple } from 'ionicons/icons';
-import { IonContent,  IonButton, IonItem , IonLabel, AlertController, IonIcon} from '@ionic/angular/standalone';
+import { 
+  IonContent, 
+  IonButton, 
+  IonItem, 
+  IonLabel, 
+  AlertController, 
+  IonIcon, 
+  IonInput,
+  AlertButton,
+  IonText,
+  IonRouterLink
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonItem, IonButton, IonContent,  CommonModule, FormsModule , IonLabel, IonIcon]
+  imports: [
+    IonItem, 
+    IonButton, 
+    IonContent, 
+    CommonModule, 
+    FormsModule, 
+    IonLabel, 
+    IonIcon, 
+    IonInput,
+    IonText,
+    IonRouterLink,
+  ]
 })
 export class LoginPage {
 
@@ -25,15 +47,30 @@ export class LoginPage {
     private alertController: AlertController
   ) {
     addIcons({ logoGoogle, logoApple });
+    console.log('LoginPage loaded. FormsModule is working.');
   }
+
   async login() {
-    try {
-      await this.authService.login(this.email, this.password);
-      this.router.navigate(['/home']); // Navigate to Home page after successful login
-    } catch (error) {
-      console.error('Login failed:', error);
-      //  toast or alert here if login fails
+    console.log('Email entered:', this.email);
+    if (!this.email || !this.email.includes('@')) {
+      this.showAlert('Invalid Email', 'Please enter a valid email address.');
+      return;
     }
+    try {
+      await this.authService.login(this.email.trim(), this.password);
+      this.router.navigate(['/home']); // Navigate to Home page after successful login
+    }catch (error: unknown) {
+      this.showAlert('Login Failed', this.getErrorMessage(error));
+    }
+  }
+
+  private getErrorMessage(error: unknown): string {
+    if (error instanceof Error) {
+      return error.message.includes('invalid-credential') 
+        ? 'Invalid email or password' 
+        : error.message;
+    }
+    return 'Login failed. Please try again.';
   }
 
   async signInWithGoogle() {
@@ -108,5 +145,4 @@ export class LoginPage {
   goToSignup() {
     this.router.navigate(['/signup']);
   }
-
 }

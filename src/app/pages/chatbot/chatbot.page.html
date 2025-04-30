@@ -1,47 +1,57 @@
-
-<ion-content>
-  <div class="chat-container" #chatContainer>
-    <div class="chat-messages">
+<ion-content #content fullscreen>
+  <div class="chat-background">
+    <!-- Back button -->
+    <div class="back-button" (click)="goBack()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </div>
+    
+    <!-- Parrot logo -->
+    <div class="parrot-logo">
+      <img src="assets/img/tsn.PNG" alt="Paco the Parrot" />
+    </div>
+    
+    <!-- Chat messages -->
+    <div class="chat-container" #chatContainer>
       <div *ngFor="let message of messages" 
            [ngClass]="{'message': true, 'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}">
-        <div class="message-content">
-          <div *ngIf="message.sender === 'bot'" class="bot-avatar">
-            <img src="assets/img/tsn.PNG" alt="Paco" />
-          </div>
-          <div class="message-bubble">
-            <div class="message-text">{{ message.content }}</div>
-            <div class="message-time">{{ message.timestamp | date:'shortTime' }}</div>
-          </div>
+        <div class="message-avatar" *ngIf="message.sender === 'bot'">
+          <img src="assets/img/tsn.PNG" alt="Paco" />
+        </div>
+        <div class="message-bubble">
+          <p class="message-text">{{ message.content }}</p>
+          <span class="message-time">{{ message.timestamp | date:'shortTime' }}</span>
         </div>
       </div>
-      <div *ngIf="isLoading" class="typing-indicator">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
+      
+      <!-- Typing indicator -->
+      <div *ngIf="isLoading" class="message bot-message">
+        <div class="message-avatar">
+          <img src="assets/img/tsn.PNG" alt="Paco" />
+        </div>
+        <div class="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
     </div>
   </div>
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <div class="input-area">
-      <ion-input 
-        [(ngModel)]="userMessage" 
-        placeholder="Type your message..." 
-        (keyup.enter)="sendMessage()"
-        class="message-input">
-      </ion-input>
-      <ion-button 
-        (click)="sendMessage()" 
-        [disabled]="userMessage.trim() === '' || isLoading"
-        expand="block" 
-        fill="solid" 
-        shape="round"
-        color="primary"
-        class="send-button">
+<!-- Message input area -->
+<div class="message-input-container">
+  <div class="message-input-wrapper">
+    <ion-input 
+      [(ngModel)]="userMessage" 
+      placeholder="TYPE YOUR MESSAGE..." 
+      (keyup.enter)="sendMessage()"
+      class="message-input">
+    </ion-input>
+    <div class="input-actions">
+      <ion-icon name="happy-outline" class="input-action-icon"></ion-icon>
+      <ion-button (click)="sendMessage()" [disabled]="!userMessage.trim() || isLoading" class="send-button">
         <ion-icon name="send"></ion-icon>
       </ion-button>
     </div>
-  </ion-toolbar>
-</ion-footer>
+  </div>
+</div>

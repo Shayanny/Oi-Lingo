@@ -14,6 +14,8 @@
 
   <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+
 
 
   <!-- add to homescreen for ios -->
@@ -22,7 +24,17 @@
 </head>
 
 <body>
-  <app-root></app-root>
+  <app-root>
+    <style>
+      :root {
+        --ion-font-family: 'Major Mono Display', monospace;
+      }
+      
+      body, input, textarea, button {
+        font-family: 'Major Mono Display', monospace;
+      }
+    </style>
+  </app-root>
 </body>
 
 </html>

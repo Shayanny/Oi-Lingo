@@ -13,9 +13,15 @@ import {
   AlertController, 
   IonIcon, 
   IonInput,
-  AlertButton,
   IonText,
-  IonRouterLink
+  IonRouterLink,
+  IonBackButton,
+  IonButtons,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonFooter,
+  IonApp
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -24,20 +30,26 @@ import {
   styleUrls: ['./login.page.scss'],
   standalone: true,
   imports: [
-    IonItem, 
-    IonButton, 
-    IonContent, 
-    CommonModule, 
-    FormsModule, 
-    IonLabel, 
-    IonIcon, 
+    CommonModule,
+    FormsModule,
+    IonContent,
+    IonButton,
+    IonItem,
+    IonLabel,
+    IonIcon,
     IonInput,
     IonText,
     IonRouterLink,
+    IonBackButton,
+    IonButtons,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    IonFooter,
+    IonApp
   ]
 })
 export class LoginPage {
-
   email: string = '';
   password: string = '';
 
@@ -50,16 +62,21 @@ export class LoginPage {
     console.log('LoginPage loaded. FormsModule is working.');
   }
 
-  async login() {
+  login() {
     console.log('Email entered:', this.email);
     if (!this.email || !this.email.includes('@')) {
       this.showAlert('Invalid Email', 'Please enter a valid email address.');
       return;
     }
     try {
-      await this.authService.login(this.email.trim(), this.password);
-      this.router.navigate(['/home']); // Navigate to Home page after successful login
-    }catch (error: unknown) {
+      this.authService.login(this.email.trim(), this.password)
+        .then(() => {
+          this.router.navigate(['/home']); // Navigate to Home page after successful login
+        })
+        .catch((error: unknown) => {
+          this.showAlert('Login Failed', this.getErrorMessage(error));
+        });
+    } catch (error: unknown) {
       this.showAlert('Login Failed', this.getErrorMessage(error));
     }
   }
